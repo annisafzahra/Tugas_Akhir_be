@@ -63,9 +63,5 @@ urlpatterns = [
     path('admin/delete-user/<int:id>/', DeleteUserSiswaView.as_view(), name='delete-user'),
 
     # ===== DELETE HASIL TES =====
-    path(
-    'admin/delete-hasil/<int:hasil_id>/',
-    delete_hasil_tes,
-    name='delete-hasil-tes'
-),
+    path('admin/delete-hasil/<int:id>/', DeleteHasilTesView.as_view(), name='delete-hasil-tes'),
 ]

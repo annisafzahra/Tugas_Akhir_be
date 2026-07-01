@@ -334,6 +334,11 @@ def admin_detail_siswa(request, user_id):
         'data': serializer.data
     })
 
+class DeleteHasilTesView(generics.DestroyAPIView):
+    queryset = HasilTes.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = HasilTesSerializer
+    lookup_field = 'id'
 
 # ===== ADMIN: DELETE HASIL TES =====
 @api_view(['DELETE'])
