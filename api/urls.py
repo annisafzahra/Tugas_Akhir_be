@@ -51,6 +51,7 @@ urlpatterns = [
     path('login/', CustomAuthToken.as_view(), name='api_login'),
     path('user/create/', RegisterView.as_view(), name='api_create_user'),
     path('user/get/', GetListUserSiswaView.as_view(), name='api_get_list_user'),
+    path('user/detail/<int:id>/', GetDetailUserSiswaView.as_view(), name='api_get_detail_user'),
 
     # ===== ENDPOINT SISWA =====
     path('tes/submit/', SubmitHasilTesView.as_view(), name='submit-tes'),
@@ -61,6 +62,7 @@ urlpatterns = [
     path('admin/siswa/', GetListUserSiswaView.as_view(), name='admin-list-siswa'),
     path('admin/siswa/<int:user_id>/', admin_detail_siswa, name='admin-detail-siswa'),
     path('admin/delete-user/<int:id>/', DeleteUserSiswaView.as_view(), name='delete-user'),
+    path('admin/update-user/<int:id>/', UpdateUserSiswaView.as_view(), name='update-user'),
 
     # ===== DELETE HASIL TES =====
     path('admin/delete-hasil/<int:id>/', DeleteHasilTesView.as_view(), name='delete-hasil-tes'),

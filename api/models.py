@@ -4,6 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     nama_lengkap = models.CharField(max_length=100)
+    nip = models.CharField(null=True, blank=True, max_length=20)
     kelas = models.CharField(max_length=50)
     usia = models.IntegerField(null=True, blank=True)
     kelamin = models.CharField(max_length=10)

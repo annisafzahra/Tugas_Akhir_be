@@ -77,6 +77,12 @@ class GetListUserSiswaView(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(is_staff=False)
+    
+class GetDetailUserSiswaView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    lookup_field = 'id'
 
 class DeleteUserSiswaView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
@@ -90,6 +96,32 @@ class DeleteUserSiswaView(generics.DestroyAPIView):
         return Response(
             {
                 "message": "User berhasil dihapus"
+            },
+            status=status.HTTP_200_OK
+        )
+    
+class UpdateUserSiswaView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'id'
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        serializer = self.get_serializer(
+            user,
+            data=request.data,
+            partial=True
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            {
+                "message": "User berhasil diupdate",
+                "data": serializer.data
             },
             status=status.HTTP_200_OK
         )
