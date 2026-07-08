@@ -182,35 +182,49 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
         extra_kwargs = {
-            'password': {'write_only': True},
-            'username': {'required': True},
-            'email': {'required': True},
+            'password': {
+                'write_only': True,
+                'required': False,
+                'allow_blank': True
+            },
+            'username': {'required': False},
+            'email': {'required': False},
             'is_staff': {'required': False},
-            'nama_lengkap': {'required': True},
-            'kelas': {'required': True},
-            'usia': {'required': True},
-            'kelamin': {'required': True},
+            'nama_lengkap': {'required': False, 'allow_blank': True},
+            'kelas': {'required': False, 'allow_blank': True},
+            'usia': {'required': False, 'allow_null': True},
+            'kelamin': {'required': False, 'allow_blank': True},
+            'nip': {'required': False, 'allow_blank': True},
         }
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-            nama_lengkap=validated_data['nama_lengkap'],
-            # nip=validated_data['nip'],
-            kelas=validated_data['kelas'],
-            usia=validated_data['usia'],
-            kelamin=validated_data['kelamin'],
+        password = validated_data.pop('password', None)
+
+        user = User(
+            username=validated_data.get('username'),
+            email=validated_data.get('email'),
+            nama_lengkap=validated_data.get('nama_lengkap', ''),
+            kelas=validated_data.get('kelas', ''),
+            usia=validated_data.get('usia', None),
+            kelamin=validated_data.get('kelamin', ''),
+            nip=validated_data.get('nip', ''),
+            is_staff=validated_data.get('is_staff', False),
         )
+
+        if password:
+            user.set_password(password)
+
+        user.save()
         return user
 
     def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+
         for attr, value in validated_data.items():
-            if attr == 'password':
-                instance.set_password(value)
-            else:
-                setattr(instance, attr, value)
+            setattr(instance, attr, value)
+
+        if password:
+            instance.set_password(password)
 
         instance.save()
         return instance
@@ -222,7 +236,9 @@ class UserSerializer(serializers.ModelSerializer):
             user_id = self.instance.id if self.instance else None
 
             if User.objects.filter(email=emailData).exclude(id=user_id).exists():
-                raise serializers.ValidationError("email udah ada")
+                raise serializers.ValidationError({
+                    "email": "Email sudah digunakan"
+                })
 
         return data
 
