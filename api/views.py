@@ -144,25 +144,25 @@ class SubmitHasilTesView(generics.CreateAPIView):
         # 1. ambil data akademik
         # =========================
         akademik = pd.DataFrame([{
-            "mtk": int(data["mtk"]),
-            "bahasa": int(data["indo"]),
-            "ipa": int(data["ipa"]),
-            "ips": int(data["ips"]),
+            "MTK": int(data["mtk"]),
+            "Bahasa": int(data["indo"]),
+            "IPA": int(data["ipa"]),
+            "IPS": int(data["ips"]),
         }])
         
         riasec = pd.DataFrame([{
-            "realistic": int(data["realistic"]),
-            "investigative": int(data["investigative"]),
-            "artistic": int(data["artistic"]),
-            "social": int(data["social"]),
-            "enterprising": int(data["enterprising"]),
-            "conventional": int(data["conventional"])
+            "Realistic": int(data["realistic"]),
+            "Investigative": int(data["investigative"]),
+            "Artistic": int(data["artistic"]),
+            "Social": int(data["social"]),
+            "Enterprising": int(data["enterprising"]),
+            "Conventional": int(data["conventional"])
         }])
         
         bakat = pd.DataFrame([{
-            "logika": int(data["logika"]),
-            "verbal": int(data["verbal"]),
-            "mekanikal": int(data["mekanikal"]),
+            "Logika": int(data["logika"]),
+            "Verbal": int(data["verbal"]),
+            "Mekanikal": int(data["mekanikal"]),
         }])
 
         # =========================
