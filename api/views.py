@@ -192,9 +192,9 @@ class SubmitHasilTesView(generics.CreateAPIView):
             0: "IPA",
             1: "TKJ",
             2: "AKL",
-            3: "Bahasa",
-            4: "TKRO",
-            5: "IPS"
+            3: "IPS",
+            4: "Bahasa",
+            5: "TKRO"
         }
 
         rekomendasi_akademik = mapping.get(cluster, "Unknown")
